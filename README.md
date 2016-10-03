@@ -8,6 +8,7 @@ Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Deskto
 
 ##Features
 
+- [x] No External ttf
 - [x] Cross-platform
 - [x] Convenience
 - [x] Open Source
