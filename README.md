@@ -46,10 +46,11 @@ label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font50"), Color
 ###Desktop:
 ![Desktop](doc/desktop.jpg)
 
-## Thank
-
-Var3d: [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
-
+## Thanks: 
+@Var3d: 
+        [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
+        [http://var3d.net/](http://var3d.net/)    
+        
 ## License
 
 NativeFont is licensed under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0.html), meaning you can use it free of charge, without strings attached in commercial and non-commercial projects. 
