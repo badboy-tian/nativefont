@@ -48,8 +48,8 @@ label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font50"), Color
 
 ## Thanks: 
 @Var3d: 
-        [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
-        [http://var3d.net/](http://var3d.net/)    
+          FreeFont: [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
+          Var3d: [http://var3d.net/](http://var3d.net/)    
         
 ## License
 
