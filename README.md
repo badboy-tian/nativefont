@@ -2,6 +2,8 @@
 
 NativeFont is an custom bitmapfont library that is used to create freedom Labels.
 
+####Welcome to join us !!!
+
 ## About Nativefont
 
 Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Desktop Graphics2D
@@ -9,6 +11,7 @@ Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Deskto
 ##Features
 
 - [x] No External ttf
+- [x] Multi-language
 - [x] Cross-platform
 - [x] Convenience
 - [x] Open Source
