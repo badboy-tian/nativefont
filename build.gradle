@@ -66,8 +66,10 @@ project(":desktop") {
 }
 
 project(":android") {
-    apply plugin: "android"
+    apply plugin: 'com.android.library'
     apply plugin: 'com.github.dcendents.android-maven'
+    //apply plugin: 'com.github.dcendents.android-maven'
+    //apply plugin: "java"
 
     configurations { natives }
 
@@ -81,14 +83,14 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
     }
 
-    assemble.dependsOn 'propertyJar'
+    /*assemble.dependsOn 'propertyJar'
     task propertyJar(type: Jar) {
         archiveName = "nativefont-android.jar"
         from('src') {
             include 'net/mwplay/nativefont/**'
             exclude 'net/mwplay/nativefont/AndroidLauncher.java'
         }
-    }
+    }*/
 }
 
 project(":ios") {
@@ -140,14 +142,14 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 
-    assemble.dependsOn 'propertyJar'
+    /*assemble.dependsOn 'propertyJar'
     task propertyJar(type: Jar) {
         archiveName = "nativefont-core.jar"
         from('src') {
             include 'net/mwplay/nativefont/**'
             exclude 'net/mwplay/nativefont/test'
         }
-    }
+    }*/
 }
 
 tasks.eclipse.doLast {
