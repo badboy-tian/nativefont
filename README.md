@@ -35,28 +35,28 @@ allprojects {
 Core
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:core:2.1.1'
+	        compile 'com.github.tianqiujie.nativefont:core:2.1.2'
 	}
 ```
 
 Android
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:android:2.1.1'
+	        compile 'com.github.tianqiujie.nativefont:android:2.1.2'
 	}
 ```   
 
 Robovm
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:ios:2.1.1'
+	        compile 'com.github.tianqiujie.nativefont:ios:2.1.2'
 	}
 ```
 
 Moe
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:ios-moe:2.1.1'
+	        compile 'com.github.tianqiujie.nativefont:ios-moe:2.1.2'
 	}
 ```
 
