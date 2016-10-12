@@ -1,5 +1,5 @@
+[![](https://jitpack.io/v/tianqiujie/nativefont.svg)](https://jitpack.io/#tianqiujie/nativefont)
 ##Welcome to NativeFont
-
 NativeFont is an custom bitmapfont library that is used to create freedom Labels.
 
 ####Welcome to join us !!!
