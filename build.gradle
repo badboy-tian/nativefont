@@ -47,23 +47,22 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java"
-
+    apply plugin: 'maven'
 
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        //compile fileTree(include: ['*.jar'], dir: 'lib')
     }
 
-    /*assemble.dependsOn 'propertyJar'
+    assemble.dependsOn 'propertyJar'
     task propertyJar(type: Jar) {
         archiveName = "nativefont-desktop.jar"
         from('src') {
             include 'net/mwplay/nativefont/desktop/**'
             exclude 'net/mwplay/nativefont/desktop/DesktopLauncher.java'
         }
-    }*/
+    }
 }
 
 project(":android") {
@@ -95,7 +94,7 @@ project(":android") {
 project(":ios") {
     apply plugin: "java"
     apply plugin: "robovm"
-
+    apply plugin: 'maven'
 
     dependencies {
         compile project(":core")
@@ -121,6 +120,8 @@ project(":html") {
 
 project(":ios-moe") {
     apply plugin: "moe"
+    apply plugin: 'maven'
+    apply plugin: "java"
 
     configurations { natives }
 
@@ -134,7 +135,6 @@ project(":ios-moe") {
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
