@@ -10,13 +10,13 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.1'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
         classpath 'org.multi-os-engine:moe-gradle:1.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-    apply plugin: 'maven'
     group = 'com.github.nativefont'
 
     version = '1.0'
@@ -35,6 +35,7 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://jitpack.io" }
     }
 
     /*resources{
