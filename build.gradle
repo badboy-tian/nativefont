@@ -16,6 +16,8 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: 'maven'
+    group = 'com.github.nativefont'
 
     version = '1.0'
     ext {
