@@ -17,7 +17,6 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-    group = 'com.github.nativefont'
 
     version = '1.0'
     ext {
@@ -49,6 +48,8 @@ project(":desktop") {
     apply plugin: "java"
     apply plugin: 'maven'
 
+    group = 'com.github.nativefont'
+
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
@@ -70,6 +71,7 @@ project(":android") {
     apply plugin: 'com.github.dcendents.android-maven'
     //apply plugin: 'com.github.dcendents.android-maven'
     //apply plugin: "java"
+    group = 'com.github.nativefont'
 
     configurations { natives }
 
@@ -98,6 +100,8 @@ project(":ios") {
     apply plugin: "robovm"
     apply plugin: 'maven'
 
+    group = 'com.github.nativefont'
+
     dependencies {
         compile project(":core")
         compile "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
@@ -111,6 +115,7 @@ project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
+    group = 'com.github.nativefont'
 
     dependencies {
         compile project(":core")
@@ -125,6 +130,8 @@ project(":ios-moe") {
     apply plugin: 'maven'
     apply plugin: "java"
 
+    group = 'com.github.nativefont'
+
     configurations { natives }
 
     dependencies {
@@ -137,6 +144,8 @@ project(":ios-moe") {
 
 project(":core") {
     apply plugin: "java"
+
+    group = 'com.github.nativefont'
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
