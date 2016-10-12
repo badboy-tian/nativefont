@@ -23,6 +23,42 @@ Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Deskto
 * MOE 1.1+
 
 ## Usage
+```
+allprojects {
+        repositories {
+            ...
+            maven { url "https://jitpack.io" }
+        }
+    }
+```
+
+Core
+```
+dependencies {
+	        compile 'com.github.tianqiujie.nativefont:core:2.1.1'
+	}
+```
+
+Android
+```
+dependencies {
+	        compile 'com.github.tianqiujie.nativefont:android:2.1.1'
+	}
+```   
+
+Robovm
+```
+dependencies {
+	        compile 'com.github.tianqiujie.nativefont:ios:2.1.1'
+	}
+```
+
+Moe
+```
+dependencies {
+	        compile 'com.github.tianqiujie.nativefont:ios-moe:2.1.1'
+	}
+```
 
 Please see the test/[FontTest.java](core/src/net/mwplay/nativefont/test/FontTest.java)
 ```
