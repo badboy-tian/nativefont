@@ -39,6 +39,13 @@ dependencies {
 	}
 ```
 
+Desktop
+```
+dependencies {
+	        compile 'com.github.tianqiujie.nativefont:desktop:2.1.2'
+	}
+```
+
 Android
 ```
 dependencies {
