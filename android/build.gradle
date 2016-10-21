@@ -1,11 +1,7 @@
 android {
-    buildToolsVersion '23.0.0'
-    compileSdkVersion 23
+    buildToolsVersion '24.0.3'
+    compileSdkVersion 24
 
-    lintOptions {
-          abortOnError false
-      }
-      
     productFlavors {
         main
         core
@@ -33,7 +29,7 @@ android {
     defaultConfig {
         applicationId "net.mwplay.navtivefont"
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 24
     }
 }
 
