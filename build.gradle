@@ -130,7 +130,7 @@ project(":core") {
 task packJar(type: Jar) {
     baseName = appName
     version = project.version
-    destinationDir = file("build/output")
+    //destinationDir = file("build/output")
     doFirst {
         from files(project(":core").sourceSets.core.output.classesDir);
         from files(project(":desktop").sourceSets.core.output.classesDir);
@@ -147,7 +147,7 @@ task packDoc(dependsOn: ":core:javadoc", type: Jar) {
     baseName = appName
     version = project.version
     classifier = "javadoc"
-    destinationDir = file("build/output")
+    //destinationDir = file("build/output")
     from project(":core").tasks["javadoc"].destinationDir
 }
 
@@ -155,7 +155,7 @@ task packSources(type: Jar) {
     baseName = appName
     version = project.version
     classifier = "sources"
-    destinationDir = file("build/output")
+    //destinationDir = file("build/output")
     doFirst {
         from files(project(":core").sourceSets.core.allJava)
         from files(project(":desktop").sourceSets.core.allJava)
