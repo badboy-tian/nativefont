@@ -1,4 +1,8 @@
+apply plugin: "java"
 apply plugin: "maven"
+
+group = "com.github.tianqiujie"
+
 buildscript {
     repositories {
         mavenLocal()
@@ -11,7 +15,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.2.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
         classpath 'org.multi-os-engine:moe-gradle:1.2.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
@@ -19,10 +22,10 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '2.2.0'
+    version = '2.3.0'
 
     ext {
-        appName = "NativeFont"
+        appName = "nativefont"
         gdxVersion = '1.9.5-SNAPSHOT'
         roboVMVersion = '2.2.0'
         box2DLightsVersion = '1.4'
@@ -35,35 +38,21 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://jitpack.io" }
     }
 }
 
 project(":desktop") {
     apply plugin: "java"
-    apply plugin: 'maven'
 
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
-
-    assemble.dependsOn 'propertyJar'
-    task propertyJar(type: Jar) {
-        archiveName = "nativefont-desktop.jar"
-        from('src') {
-            include 'net/mwplay/nativefont/desktop/**'
-            exclude 'net/mwplay/nativefont/desktop/DesktopLauncher.java'
-        }
-    }
 }
 
 project(":android") {
     apply plugin: 'com.android.application'
-    apply plugin: 'com.github.dcendents.android-maven'
-    //apply plugin: 'com.github.dcendents.android-maven'
-    //apply plugin: "java"
 
     configurations { natives }
 
@@ -81,7 +70,6 @@ project(":android") {
 project(":ios") {
     apply plugin: "java"
     apply plugin: "robovm"
-    apply plugin: 'maven'
 
     dependencies {
         compile project(":core")
@@ -96,7 +84,6 @@ project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
@@ -107,8 +94,6 @@ project(":html") {
 
 project(":ios-moe") {
     apply plugin: "moe"
-    apply plugin: 'maven'
-    apply plugin: "java"
 
     configurations { natives }
 
@@ -128,9 +113,6 @@ project(":core") {
 }
 
 task packJar(type: Jar) {
-    baseName = appName
-    version = project.version
-    destinationDir = file("build/output")
     doFirst {
         from files(project(":core").sourceSets.core.output.classesDir);
         from files(project(":desktop").sourceSets.core.output.classesDir);
@@ -144,18 +126,12 @@ def preCompile = [":core:coreClasses", ":desktop:coreClasses", ":ios:coreClasses
 packJar.dependsOn preCompile
 
 task packDoc(dependsOn: ":core:javadoc", type: Jar) {
-    baseName = appName
-    version = project.version
     classifier = "javadoc"
-    destinationDir = file("build/output")
     from project(":core").tasks["javadoc"].destinationDir
 }
 
 task packSources(type: Jar) {
-    baseName = appName
-    version = project.version
     classifier = "sources"
-    destinationDir = file("build/output")
     doFirst {
         from files(project(":core").sourceSets.core.allJava)
         from files(project(":desktop").sourceSets.core.allJava)
@@ -171,10 +147,4 @@ artifacts {
     archives packJar
     archives packDoc
     archives packSources
-}
-
-uploadArchives {
-    repositories {
-        //TODO 完善上传maven仓库的操作
-    }
 }
