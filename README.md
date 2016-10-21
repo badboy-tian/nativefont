@@ -39,7 +39,7 @@ dependencies {
 	}
 ```
 
-Please see the test/[FontTest.java](core/src/net/mwplay/nativefont/test/FontTest.java)
+Please see the test/[FontTest.java](core/src/main/java/net/mwplay/nativefont/test/FontTest.java)
 ```
 NativeFont font50 = new NativeFont(new NativeFontPaint(50));
         font50.appendText(DEFAULT_CHARS);
