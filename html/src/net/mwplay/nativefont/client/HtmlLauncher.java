@@ -18,7 +18,7 @@ public class HtmlLauncher extends GwtApplication implements NativeFontListener {
 
     @Override
     public ApplicationListener createApplicationListener() {
-        return new FontTestGame(HtmlLauncher.this);
+        return new FontTestGame();
     }
 
     @Override
