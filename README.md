@@ -38,6 +38,18 @@ dependencies {
 	        compile 'com.github.tianqiujie.nativefont:NativeFont:2.2.0'
 	}
 ```
+In Robovm
+```
+@Override
+    protected IOSApplication createApplication() {
+        IOSApplicationConfiguration config = new IOSApplicationConfiguration();
+        FontTestGame game = new FontTestGame();
+        //important!!!
+        NativeFont.setRobovm();
+
+        return new IOSApplication(game, config);
+    }
+```
 
 Please see the test/[FontTest.java](core/src/main/java/net/mwplay/nativefont/test/FontTest.java)
 ```
