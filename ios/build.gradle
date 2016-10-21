@@ -1,11 +1,19 @@
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets {
+    main {
+        java.srcDirs = ["src/main/java", "src/core/java"]
+    }
+    core {
+        java.srcDirs = ["src/core/java"]
+        compileClasspath += sourceSets.main.runtimeClasspath;
+    }
+}
 
 
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
-	mainClassName = "IOSLauncher"
+    mainClassName = "IOSLauncher"
 }
 
 launchIPhoneSimulator.dependsOn build

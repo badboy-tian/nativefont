@@ -1,58 +1,146 @@
-android {
-    buildToolsVersion '25'
-    compileSdkVersion 24
-
-    productFlavors {
-        main
-        core
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
     }
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src/main/java', "src/core/java"]
-            aidl.srcDirs = ['src/main/java', "src/core/java"]
-            renderscript.srcDirs = ['src/main/java', "src/core/java"]
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs']
-        }
-        core {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src/core/java']
-            aidl.srcDirs = ['src/core/java']
-            renderscript.srcDirs = ['src/core/java']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-    defaultConfig {
-        applicationId "net.mwplay.navtivefont"
-        minSdkVersion 8
-        targetSdkVersion 24
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
+        classpath 'org.multi-os-engine:moe-gradle:1.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
-task copyAndroidNatives() {
-    file("libs/armeabi/").mkdirs();
-    file("libs/armeabi-v7a/").mkdirs();
-    file("libs/arm64-v8a/").mkdirs();
-    file("libs/x86_64/").mkdirs();
-    file("libs/x86/").mkdirs();
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
 
-    configurations.natives.files.each { jar ->
-        def outputDir = null
-        if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-        if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-        if (jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
-        if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-        if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-        if (outputDir != null) {
-            copy {
-                from zipTree(jar)
-                into outputDir
-                include "*.so"
-            }
+    version = '2.2.0'
+
+    ext {
+        appName = "NativeFont"
+        gdxVersion = '1.9.5-SNAPSHOT'
+        roboVMVersion = '2.2.0'
+        box2DLightsVersion = '1.4'
+        ashleyVersion = '1.7.0'
+        aiVersion = '1.8.0'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://jitpack.io" }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java"
+    apply plugin: 'maven'
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+
+    assemble.dependsOn 'propertyJar'
+    task propertyJar(type: Jar) {
+        archiveName = "nativefont-desktop.jar"
+        from('src') {
+            include 'net/mwplay/nativefont/desktop/**'
+            exclude 'net/mwplay/nativefont/desktop/DesktopLauncher.java'
         }
     }
 }
+
+project(":android") {
+    apply plugin: 'com.android.application'
+    apply plugin: 'com.github.dcendents.android-maven'
+    //apply plugin: 'com.github.dcendents.android-maven'
+    //apply plugin: "java"
+
+    configurations { natives }
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+    }
+}
+
+project(":ios") {
+    apply plugin: "java"
+    apply plugin: "robovm"
+    apply plugin: 'maven'
+
+    dependencies {
+        compile project(":core")
+        compile "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+        compile "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+    }
+}
+
+project(":html") {
+    apply plugin: "gwt"
+    apply plugin: "war"
+
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+    }
+}
+
+project(":ios-moe") {
+    apply plugin: "moe"
+    apply plugin: 'maven'
+    apply plugin: "java"
+
+    configurations { natives }
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-moe:$gdxVersion"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
+    }
+}
+project(":core") {
+    apply plugin: "java"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}
+
+task packJar(type: Jar) {
+    baseName = appName;
+    version = project.version;
+    destinationDir = file("build/output/jar")
+    doFirst {
+        from files(project(":core").sourceSets.core.output.classesDir);
+        from files(project(":desktop").sourceSets.core.output.classesDir);
+        from files(project(":ios").sourceSets.core.output.classesDir);
+        from files(project(":ios-moe").sourceSets.core.output.classesDir);
+        from fileTree(dir: "android/build/intermediates/classes/core/release/", include: "NativeFontAndroid.class");
+    }
+}
+
+packJar.dependsOn(":core:coreClasses")
+packJar.dependsOn(":desktop:coreClasses")
+packJar.dependsOn(":ios:coreClasses")
+packJar.dependsOn(":ios-moe:coreClasses")
+packJar.dependsOn(":android:compileCoreReleaseJavaWithJavac")

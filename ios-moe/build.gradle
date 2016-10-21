@@ -1,7 +1,7 @@
 task copyNatives << {
     file("xcode/native/ios/").mkdirs();
     def LD_FLAGS = "LIBGDX_NATIVES = "
-    configurations.natives.files.each { jar->
+    configurations.natives.files.each { jar ->
         def outputDir = null
         if (jar.name.endsWith("natives-ios.jar")) outputDir = file("xcode/native/ios")
         if (outputDir != null) {
@@ -25,6 +25,7 @@ task copyNatives << {
         proguard = new File("proguard.append.cfg")
         proguard << "\n-keep class com.badlogic.** { *; }\n"
         proguard << "-keep enum com.badlogic.** { *; }\n"
+        proguard << "-keep class net.mwplay.** { *; }\n"
     }
 }
 
@@ -35,7 +36,15 @@ task createBuildDir {
     }
 }
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets {
+    main {
+        java.srcDirs = ["src/main/java", "src/core/java"]
+    }
+    core {
+        java.srcDirs = ["src/core/java"]
+        compileClasspath += sourceSets.main.runtimeClasspath;
+    }
+}
 
 
 moe {
@@ -45,15 +54,6 @@ moe {
         deploymentTarget = '8.0'
         xcodeProjectDirPath 'xcode'
         generateProject false
-    }
-
-    signing {
-        // String, ID of the development team.
-        //developmentTeam="BJ4988JNBS"
-        // String, path to the provisioning profile.
-        //provisioningProfile
-        // String, name of the signing identity
-        //signingIdentity
     }
 }
 
