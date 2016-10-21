@@ -32,49 +32,21 @@ allprojects {
     }
 ```
 
-Core
+
 ```
 dependencies {
 	        compile 'com.github.tianqiujie.nativefont:core:2.1.2'
 	}
 ```
 
-Desktop
-```
-dependencies {
-	        compile 'com.github.tianqiujie.nativefont:desktop:2.1.2'
-	}
-```
-
-Android
-```
-dependencies {
-	        compile 'com.github.tianqiujie.nativefont:android:2.1.2'
-	}
-```   
-
-Robovm
-```
-dependencies {
-	        compile 'com.github.tianqiujie.nativefont:ios:2.1.2'
-	}
-```
-
-Moe
-```
-dependencies {
-	        compile 'com.github.tianqiujie.nativefont:ios-moe:2.1.2'
-	}
-```
-
 Please see the test/[FontTest.java](core/src/net/mwplay/nativefont/test/FontTest.java)
 ```
-NativeFont font50 = new NativeFont(fontListener, new NativeFontPaint(50));
+NativeFont font50 = new NativeFont(new NativeFontPaint(50));
         font50.appendText(DEFAULT_CHARS);
         fonts.put("font50", font50);
 ```
 ```
-label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font50"), Color.BLACK));
+label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         stage.addActor(label);

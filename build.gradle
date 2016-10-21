@@ -1,3 +1,4 @@
+apply plugin: "maven"
 buildscript {
     repositories {
         mavenLocal()
@@ -127,9 +128,9 @@ project(":core") {
 }
 
 task packJar(type: Jar) {
-    baseName = appName;
-    version = project.version;
-    destinationDir = file("build/output/jar")
+    baseName = appName
+    version = project.version
+    destinationDir = file("build/output")
     doFirst {
         from files(project(":core").sourceSets.core.output.classesDir);
         from files(project(":desktop").sourceSets.core.output.classesDir);
@@ -138,9 +139,42 @@ task packJar(type: Jar) {
         from fileTree(dir: "android/build/intermediates/classes/core/release/", include: "NativeFontAndroid.class");
     }
 }
+def preCompile = [":core:coreClasses", ":desktop:coreClasses", ":ios:coreClasses", ":ios-moe:coreClasses", ":android:compileCoreReleaseJavaWithJavac"];
 
-packJar.dependsOn(":core:coreClasses")
-packJar.dependsOn(":desktop:coreClasses")
-packJar.dependsOn(":ios:coreClasses")
-packJar.dependsOn(":ios-moe:coreClasses")
-packJar.dependsOn(":android:compileCoreReleaseJavaWithJavac")
+packJar.dependsOn preCompile
+
+task packDoc(dependsOn: ":core:javadoc", type: Jar) {
+    baseName = appName
+    version = project.version
+    classifier = "javadoc"
+    destinationDir = file("build/output")
+    from project(":core").tasks["javadoc"].destinationDir
+}
+
+task packSources(type: Jar) {
+    baseName = appName
+    version = project.version
+    classifier = "sources"
+    destinationDir = file("build/output")
+    doFirst {
+        from files(project(":core").sourceSets.core.allJava)
+        from files(project(":desktop").sourceSets.core.allJava)
+        from files(project(":ios").sourceSets.core.allJava)
+        from files(project(":ios-moe").sourceSets.core.allJava)
+        from files(":android/src/core/java")
+    }
+}
+
+task packAll(dependsOn: ['packJar', 'packDoc', 'packSources'])
+
+artifacts {
+    archives packJar
+    archives packDoc
+    archives packSources
+}
+
+uploadArchives {
+    repositories {
+        //TODO 完善上传maven仓库的操作
+    }
+}

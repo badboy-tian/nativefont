@@ -1,5 +1,4 @@
 apply plugin: "java"
-apply plugin: 'maven'
 
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -10,6 +9,13 @@ sourceSets {
     core {
         java.srcDirs = ["src/core/java"]
         compileClasspath += sourceSets.main.runtimeClasspath;
+    }
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet "UTF-8"
     }
 }
 
