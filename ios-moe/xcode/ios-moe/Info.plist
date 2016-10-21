@@ -25,7 +25,7 @@
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>MOE.Main.Class</key>
-	<string>net.mwplay.nativefont.IOSMoeLauncher</string>
+	<string>net.mwplay.nativefont.test.IOSMoeLauncher</string>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
 	<key>UIRequiredDeviceCapabilities</key>
