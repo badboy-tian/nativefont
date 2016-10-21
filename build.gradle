@@ -185,6 +185,7 @@ install {
       }
     }
   }
+}
 
 uploadArchives {
     repositories {
