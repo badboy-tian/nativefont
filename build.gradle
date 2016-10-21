@@ -173,6 +173,19 @@ artifacts {
     archives packSources
 }
 
+install {
+  repositories.mavenInstaller {
+    pom.project {
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+    }
+  }
+
 uploadArchives {
     repositories {
         //TODO 完善上传maven仓库的操作
