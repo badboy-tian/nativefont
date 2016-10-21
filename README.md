@@ -35,7 +35,7 @@ allprojects {
 
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:core:2.1.2'
+	        compile 'com.github.tianqiujie.nativefont:NativeFont:2.2.0'
 	}
 ```
 
