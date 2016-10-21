@@ -61,14 +61,14 @@ public class FontTest extends ScreenAdapter {
     }
 
     private void addLabel(String text, Vector2 pos) {
-        label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font"), Color.BLACK));
+        label = new NativeLabel("", game.fonts.get("font"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         stage.addActor(label);
     }
 
     private void addLabel(String text, Vector2 pos, Color strokeColor) {
-        label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font"), Color.BLACK));
+        label = new NativeLabel("", game.fonts.get("font"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         label.setStroke(strokeColor, 1);
@@ -76,7 +76,7 @@ public class FontTest extends ScreenAdapter {
     }
 
     private void addLabel50(String text, Vector2 pos, Color strokeColor) {
-        label = new NativeLabel("", new Label.LabelStyle(game.fonts.get("font50"), Color.BLACK));
+        label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         label.setStroke(strokeColor, 1);
