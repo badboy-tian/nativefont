@@ -35,7 +35,7 @@ allprojects {
 
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:NativeFont:2.2.9'
+	        compile 'com.github.tianqiujie.nativefont:2.2.9'
 	}
 ```
 In Robovm
