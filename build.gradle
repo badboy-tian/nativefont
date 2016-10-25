@@ -118,7 +118,7 @@ task packJar(type: Jar) {
         from files(project(":desktop").sourceSets.core.output.classesDir);
         from files(project(":ios").sourceSets.core.output.classesDir);
         from files(project(":ios-moe").sourceSets.core.output.classesDir);
-        from fileTree(dir: "android/build/intermediates/classes/core/release/", include: "NativeFontAndroid.class");
+        from fileTree(dir: "android/build/intermediates/classes/core/release/", includes: ["**/NativeFontAndroid.class"], exclude: "**/test");
     }
 }
 def preCompile = [":core:coreClasses", ":desktop:coreClasses", ":ios:coreClasses", ":ios-moe:coreClasses", ":android:compileCoreReleaseJavaWithJavac"];
