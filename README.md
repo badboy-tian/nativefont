@@ -63,7 +63,21 @@ label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setPosition(pos.x, pos.y);
         stage.addActor(label);
 ```
-
+If you use the jdk1.8, or android studio 2.2+. You should add some code in android/build.gradle
+```
+defaultConfig {
+        applicationId "com.yuyointeractive.jiangximahjong"
+        minSdkVersion 8
+        targetSdkVersion 24
+        jackOptions {
+            enabled true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+```
 ## ScreenShot
 
 ###Android:
