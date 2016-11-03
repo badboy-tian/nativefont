@@ -43,8 +43,8 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java"
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
     dependencies {
         compile project(":core")
@@ -72,8 +72,8 @@ project(":android") {
 project(":ios") {
     apply plugin: "java"
     apply plugin: "robovm"
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
     dependencies {
         compile project(":core")
@@ -93,6 +93,8 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        // https://mvnrepository.com/artifact/com.github.xuwei-k/html2image
+        compile group: 'com.github.xuwei-k', name: 'html2image', version: '0.1.0'
     }
 }
 
@@ -110,8 +112,8 @@ project(":ios-moe") {
 }
 project(":core") {
     apply plugin: "java"
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

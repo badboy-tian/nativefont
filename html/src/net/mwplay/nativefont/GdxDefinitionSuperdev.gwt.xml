@@ -3,7 +3,7 @@
 <module rename-to="html">
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 
-    <inherits name='net/mwplay/nativefont.GdxDefinition' />
+    <inherits name='net.mwplay.nativefont.GdxDefinition' />
     
     <collapse-all-properties />
     

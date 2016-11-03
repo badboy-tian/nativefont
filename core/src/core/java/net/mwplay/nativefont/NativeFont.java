@@ -75,10 +75,12 @@ public class NativeFont extends BitmapFont {
                 className += "IOS";
             else
                 className += "IOSMoe";
+        }else if (Gdx.app.getType() == Application.ApplicationType.WebGL){
+            className += "Html";
         }
+
         try {
-            @SuppressWarnings("unchecked")
-            Class<? extends NativeFontListener> claz = (Class<? extends NativeFontListener>) getClass().getClassLoader().loadClass(className);
+            Class<? extends NativeFontListener> claz = (Class<? extends NativeFontListener>) Gdx.app.getClass().getClassLoader().loadClass(className);
             listener = claz.newInstance();
         } catch (Exception e) {
             throw new GdxRuntimeException("Class Not Found:" + e.getMessage());

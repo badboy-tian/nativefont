@@ -260,6 +260,11 @@
 			isa = PBXProject;
 			attributes = {
 				ORGANIZATIONNAME = "";
+				TargetAttributes = {
+					0E9154217F235BB5B2BFC4BE = {
+						DevelopmentTeam = 8XM44745TJ;
+					};
+				};
 			};
 			buildConfigurationList = C55142AA649A48403E0908DF /* Build configuration list for PBXProject "ios-moe" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -427,13 +432,16 @@
 			baseConfigurationReference = 1ED204BD74E9D5EA07497539 /* build.xcconfig */;
 			buildSettings = {
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 8XM44745TJ;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ios-moe/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "${MOE_OTHER_LDFLAGS}";
 				PRODUCT_NAME = "ios-moe";
 				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -457,13 +465,16 @@
 			baseConfigurationReference = 1ED204BD74E9D5EA07497539 /* build.xcconfig */;
 			buildSettings = {
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 8XM44745TJ;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ios-moe/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "${MOE_OTHER_LDFLAGS}";
 				PRODUCT_NAME = "ios-moe";
 				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

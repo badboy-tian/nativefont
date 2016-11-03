@@ -48,6 +48,7 @@ sourceSets {
 
 
 moe {
+    proguardLevel 'all'
     xcode {
         mainTarget 'ios-moe'
         packageName 'net.mwplay.nativefont'

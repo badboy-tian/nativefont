@@ -28,7 +28,6 @@ public class NativeFontIOSMoe implements NativeFontListener {
 
     private UIColor getColor(Color color) {
         return UIColor.colorWithRedGreenBlueAlpha(color.r, color.g, color.b, color.a);
-        // return UIColor.fromRGBA((double) color.r, (double) color.g, (double) color.b, (double) color.a);
     }
 
     @Override
