@@ -58,6 +58,17 @@ public class FontTest extends ScreenAdapter {
         addLabel50("你好", base1.cpy().sub(0, 220), Color.RED);
         addLabel50("Përshëndetje", base1.cpy().sub(0, 280), Color.RED);
         addLabel50("¡Hola", base1.cpy().sub(0, 340), Color.RED);
+
+        base1.set(400, 400);
+        addLabelTTF("Hello", base1.cpy(), Color.BROWN);
+        addLabelTTF("안녕하세요", base1.cpy().sub(0, 40), Color.BLUE);
+        addLabelTTF("こんにちは", base1.cpy().sub(0, 100), Color.GREEN);
+        addLabelTTF("привет", base1.cpy().sub(0, 160), Color.RED);
+        addLabelTTF("你好", base1.cpy().sub(0, 220), Color.RED);
+        addLabelTTF("Përshëndetje", base1.cpy().sub(0, 280), Color.RED);
+        addLabelTTF("¡Hola", base1.cpy().sub(0, 340), Color.RED);
+
+
     }
 
     private void addLabel(String text, Vector2 pos) {
@@ -77,6 +88,14 @@ public class FontTest extends ScreenAdapter {
 
     private void addLabel50(String text, Vector2 pos, Color strokeColor) {
         label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
+        label.setText(text);
+        label.setPosition(pos.x, pos.y);
+        label.setStroke(strokeColor, 1);
+        stage.addActor(label);
+    }
+
+    private void addLabelTTF(String text,Vector2 pos,Color strokeColor){
+        label = new NativeLabel("",game.fonts.get("ttffont"),Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         label.setStroke(strokeColor, 1);

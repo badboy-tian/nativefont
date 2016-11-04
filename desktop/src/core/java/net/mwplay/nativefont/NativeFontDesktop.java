@@ -1,23 +1,25 @@
 package net.mwplay.nativefont;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 
-import net.mwplay.nativefont.NativeFontListener;
-import net.mwplay.nativefont.NativeFontPaint;
 
 import java.awt.BasicStroke;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.AttributedString;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -28,48 +30,53 @@ import static javax.swing.UIManager.getColor;
  */
 
 public class NativeFontDesktop implements NativeFontListener {
-    Map<Integer, FontMetrics> metrics = new HashMap<Integer, FontMetrics>();
-    Map<Integer, Font> fonts = new HashMap<Integer, Font>();
+    private HashMap<String, Font> fonts = new HashMap<String, Font>();
+    private HashMap<String, FontMetrics> metrics = new HashMap<String, FontMetrics>();
     private AttributedString as;
 
-    @Override
-    public Pixmap getFontPixmap(String txt, NativeFontPaint freePaint) {
-        int textSize = freePaint.getTextSize();
-        boolean z = freePaint.getFakeBoldText() || freePaint.getStrokeColor() != null;
-        Font font = getFont(textSize, z);
-        FontMetrics fm = this.metrics.get(freePaint.getTextSize());
+    public Pixmap getFontPixmap(String txt, NativeFontPaint vpaint) {
+        Font font = getFont(vpaint);
+        FontMetrics fm = metrics.get(vpaint.getName());
         int strWidth = fm.stringWidth(txt);
         int strHeight = fm.getAscent() + fm.getDescent();
         if (strWidth == 0) {
-            strHeight = freePaint.getTextSize();
-            strWidth = strHeight;
+            strWidth = strHeight = vpaint.getTextSize();
         }
-        BufferedImage bi = new BufferedImage(strWidth, strHeight, 6);
+        BufferedImage bi = new BufferedImage(strWidth, strHeight,
+                BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g = bi.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         g.setFont(font);
-        if (freePaint.getStrokeColor() != null) {
-            Shape shape = font.createGlyphVector(fm.getFontRenderContext(), txt).getOutline();
-            g.setColor(getColor(freePaint.getColor()));
+        if (vpaint.getStrokeColor() != null) {
+            // 描边
+            GlyphVector v = font.createGlyphVector(fm.getFontRenderContext(),
+                    txt);
+            Shape shape = v.getOutline();
+            g.setColor(getColor(vpaint.getColor()));
             g.translate(0, fm.getAscent());
             g.fill(shape);
-            g.setStroke(new BasicStroke((float) freePaint.getStrokeWidth()));
-            g.setColor(getColor(freePaint.getStrokeColor()));
+            g.setStroke(new BasicStroke(vpaint.getStrokeWidth()));
+            g.setColor(getColor(vpaint.getStrokeColor()));
             g.draw(shape);
-        } else if (freePaint.getUnderlineText()) {
-            as = new AttributedString(txt);
+        } else if (vpaint.getUnderlineText() == true) {
+            // 下划线
+            AttributedString as = new AttributedString(txt);
             as.addAttribute(TextAttribute.FONT, font);
             as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-            g.setColor(getColor(freePaint.getColor()));
+            g.setColor(getColor(vpaint.getColor()));
             g.drawString(as.getIterator(), 0, fm.getAscent());
-        } else if (freePaint.getStrikeThruText()) {
-            as = new AttributedString(txt);
+        } else if (vpaint.getStrikeThruText() == true) {
+            // 删除线
+            AttributedString as = new AttributedString(txt);
             as.addAttribute(TextAttribute.FONT, font);
-            as.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-            g.setColor(getColor(freePaint.getColor()));
+            as.addAttribute(TextAttribute.STRIKETHROUGH,
+                    TextAttribute.STRIKETHROUGH_ON);
+            g.setColor(getColor(vpaint.getColor()));
             g.drawString(as.getIterator(), 0, fm.getAscent());
         } else {
-            g.setColor(getColor(freePaint.getColor()));
+            // 普通
+            g.setColor(getColor(vpaint.getColor()));
             g.drawString(txt, 0, fm.getAscent());
         }
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -78,18 +85,37 @@ public class NativeFontDesktop implements NativeFontListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return new Pixmap(buffer.toByteArray(), 0, buffer.toByteArray().length);
+        Pixmap pixmap = new Pixmap(buffer.toByteArray(), 0,
+                buffer.toByteArray().length);
+        return pixmap;
     }
 
-    private Font getFont(int defaultFontSize, boolean isBolo) {
-        Font font = this.fonts.get(defaultFontSize);
+    private Font getFont(NativeFontPaint vpaint) {
+        boolean isBolo=vpaint.getFakeBoldText() || vpaint.getStrokeColor() != null;
+        Font font = fonts.get(vpaint.getName());
         if (font == null) {
-            font = new Font("", isBolo ? 1 : 0, defaultFontSize);
-            this.fonts.put(defaultFontSize, font);
-            Graphics2D g = new BufferedImage(1, 1, 6).createGraphics();
+            if (vpaint.getTTFName().equals("")) {
+                font = new Font("",isBolo ? Font.BOLD : Font.PLAIN, vpaint.getTextSize());
+            } else {
+                try {
+                    ByteArrayInputStream in = new ByteArrayInputStream(Gdx.files.internal( vpaint.getTTFName() + (vpaint.getTTFName()
+                            .endsWith(".ttf") ? "" : ".ttf")).readBytes());
+                    BufferedInputStream fb = new BufferedInputStream(in);
+                    font = Font.createFont(Font.TRUETYPE_FONT,fb).deriveFont(Font.BOLD,vpaint.getTextSize());
+                    fb.close();
+                    in.close();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            fonts.put(vpaint.getName(), font);
+            BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
+            Graphics2D g = bi.createGraphics();
             g.setFont(font);
-            this.metrics.put(defaultFontSize, g.getFontMetrics());
+            FontMetrics fm = g.getFontMetrics();
+            metrics.put(vpaint.getName(), fm);
         }
         return font;
     }

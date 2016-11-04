@@ -39,6 +39,10 @@ public class FontTestGame extends Game {
         font50.appendText(DEFAULT_CHARS);
         fonts.put("font50", font50);
 
+        NativeFont ttfFont = new NativeFont(new NativeFontPaint("test.ttf"));
+        ttfFont.appendText(DEFAULT_CHARS);
+        this.fonts.put("ttffont",ttfFont);
+
         setScreen(new FontTest(this));
     }
 }
