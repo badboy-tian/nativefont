@@ -8,9 +8,9 @@ import java.util.Map;
 
 /**
  * TTF Font file parser
- * <p>
+ *
  * sample:
- * <code><pre>
+ * 
  *             File fs = new File("C:\\Windows\\Fonts");
  *             File[] files = fs.listFiles(new FilenameFilter() { *
  *               public boolean accept(File dir, String name) {
@@ -23,12 +23,12 @@ import java.util.Map;
  *               parser.parse(file.getAbsolutePath());
  *               System.out.println("font name: " + parser.getFontName());
  *             }
- * </pre></code>
- * <p/>
+ * 
+ * 
  * Copyright: Copyright (c) 12-8-6 下午3:51
- * <p/>
+ * 
  * Version: 1.0
- * <p/>
+ * 
  */
 public class TTFParser {
 
