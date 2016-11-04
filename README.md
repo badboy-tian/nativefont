@@ -87,6 +87,24 @@ defaultConfig {
 ###Desktop:
 ![Desktop](doc/desktop.jpg)
 
+##Costum Font
+####NativeFont can use a costum font by .ttf
+1.Placed the .ttf file under the asset folder.
+
+2.In Robovm,Under the ios project, open the info.plist.xml file,in < dict > write the following code behind.
+```
+    <key>UIAppFonts</key>
+    <array>
+        <string>your_file.ttf</string>
+    </array>
+```
+3.Than you can use ,like this
+```
+   NativeFont ttfFont = new NativeFont(new NativeFontPaint("test.ttf"));
+   NativeLabel label = new NativeLabel("Hello World",ttfFont,Color.BLACK);
+```
+
+
 ## Thanks: 
 @Var3d: 
           FreeFont: [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
