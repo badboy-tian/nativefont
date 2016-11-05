@@ -79,29 +79,34 @@ public class NativeFontDesktop implements NativeFontListener {
             g.setColor(getColor(vpaint.getColor()));
             g.drawString(txt, 0, fm.getAscent());
         }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        Pixmap pixmap = null;
+
         try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ImageIO.write(bi, "png", buffer);
+
+            pixmap = new Pixmap(buffer.toByteArray(), 0, buffer.toByteArray().length);
+            buffer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Pixmap pixmap = new Pixmap(buffer.toByteArray(), 0,
-                buffer.toByteArray().length);
+
         return pixmap;
     }
 
     private Font getFont(NativeFontPaint vpaint) {
-        boolean isBolo=vpaint.getFakeBoldText() || vpaint.getStrokeColor() != null;
+        boolean isBolo = vpaint.getFakeBoldText() || vpaint.getStrokeColor() != null;
         Font font = fonts.get(vpaint.getName());
         if (font == null) {
             if (vpaint.getTTFName().equals("")) {
-                font = new Font("",isBolo ? Font.BOLD : Font.PLAIN, vpaint.getTextSize());
+                font = new Font("", isBolo ? Font.BOLD : Font.PLAIN, vpaint.getTextSize());
             } else {
                 try {
-                    ByteArrayInputStream in = new ByteArrayInputStream(Gdx.files.internal( vpaint.getTTFName() + (vpaint.getTTFName()
+                    ByteArrayInputStream in = new ByteArrayInputStream(Gdx.files.internal(vpaint.getTTFName() + (vpaint.getTTFName()
                             .endsWith(".ttf") ? "" : ".ttf")).readBytes());
                     BufferedInputStream fb = new BufferedInputStream(in);
-                    font = Font.createFont(Font.TRUETYPE_FONT,fb).deriveFont(Font.BOLD,vpaint.getTextSize());
+                    font = Font.createFont(Font.TRUETYPE_FONT, fb).deriveFont(Font.BOLD, vpaint.getTextSize());
                     fb.close();
                     in.close();
                 } catch (FontFormatException e) {
