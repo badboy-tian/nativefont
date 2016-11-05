@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import net.mwplay.nativefont.NativeLabel;
+import net.mwplay.nativefont.NativeTextField;
 
 /**
  * Created by tian on 2016/10/2.
@@ -68,7 +69,15 @@ public class FontTest extends ScreenAdapter {
         addLabelTTF("Përshëndetje", base1.cpy().sub(0, 280), Color.RED);
         addLabelTTF("¡Hola", base1.cpy().sub(0, 340), Color.RED);
 
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle();
+        style.font = game.fonts.get("font");
+        style.fontColor = Color.BLACK;
 
+        NativeTextField nativeTextField = new NativeTextField("123", style);
+        nativeTextField.setPosition(400, 500);
+        nativeTextField.setWidth( 100 );
+        nativeTextField.debug();
+        stage.addActor(nativeTextField);
     }
 
     private void addLabel(String text, Vector2 pos) {
