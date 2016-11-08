@@ -66,6 +66,10 @@ label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         stage.addActor(label);
+        
+NativeLabel nativeLabel = new NativeLabel("as", game.fonts.get("font"));
+        nativeLabel.pos(300, 500).color(Color.BLACK).text("xxxxxxx").drag().enableTouch();
+        nativeLabel.addTo(stage);
 ```
 
 ## ScreenShot
