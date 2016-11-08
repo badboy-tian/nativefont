@@ -22,6 +22,10 @@ Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Deskto
 * Robovm fork 2.0+
 * MOE 1.1+
 
+##Widget
+* NativeLabel
+* NativeButton
+
 ## Usage
 ```
 allprojects {
