@@ -78,6 +78,12 @@ public class FontTest extends ScreenAdapter {
         nativeTextField.setWidth( 100 );
         nativeTextField.debug();
         stage.addActor(nativeTextField);
+
+        NativeLabel nativeLabel = new NativeLabel("as", game.fonts.get("font"));
+        nativeLabel.pos(300, 500).color(Color.BLACK).text("xxxxxxx").drag().enableTouch();
+        nativeLabel.addTo(stage);
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     private void addLabel(String text, Vector2 pos) {
