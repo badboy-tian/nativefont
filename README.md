@@ -54,6 +54,7 @@ In Robovm
         return new IOSApplication(game, config);
     }
 ```
+add ```<pattern>net.mwplay.nativefont.*</pattern> ```in robovm.xml.
 
 Please see the test/[FontTest.java](core/src/main/java/net/mwplay/nativefont/test/FontTest.java)
 ```
