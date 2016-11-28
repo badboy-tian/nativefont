@@ -42,6 +42,9 @@ dependencies {
 	        compile 'com.github.tianqiujie.nativefont:2.3.4'
 	}
 ```
+In Moe
+add ```-keep class net.mwplay.nativefont.** { *; }```in proguard.append.cfg
+
 In Robovm
 ```
 @Override
