@@ -105,8 +105,9 @@ NativeLabel nativeLabel = new NativeLabel("as", game.fonts.get("font"));
 
 ## Thanks: 
 @Var3d: 
-          FreeFont: [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
-          Var3d: [http://var3d.net/](http://var3d.net/)    
+          QQ: 348705644
+	  Email: var3d@qq.com
+          Var3d: [http://var3d.net/](http://var3d.net/)    
         
 ## License
 
