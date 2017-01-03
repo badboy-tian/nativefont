@@ -25,6 +25,8 @@ Make Native bitmapFont from Native code. Android Bitmap or IOS UILabel or Deskto
 ##Widget
 * NativeLabel
 * NativeButton
+* NativeTextField
+* NativeTextArea
 
 ## Usage
 ```
