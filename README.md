@@ -42,6 +42,9 @@ dependencies {
 	        compile 'com.github.tianqiujie.nativefont:2.3.4'
 	}
 ```
+In Moe
+add ```-keep class net.mwplay.nativefont.** { *; }```in proguard.append.cfg
+
 In Robovm
 ```
 @Override
@@ -54,6 +57,7 @@ In Robovm
         return new IOSApplication(game, config);
     }
 ```
+add ```<pattern>net.mwplay.nativefont.*</pattern> ```in robovm.xml.
 
 Please see the test/[FontTest.java](core/src/main/java/net/mwplay/nativefont/test/FontTest.java)
 ```
@@ -101,8 +105,9 @@ NativeLabel nativeLabel = new NativeLabel("as", game.fonts.get("font"));
 
 ## Thanks: 
 @Var3d: 
-          FreeFont: [http://blog.csdn.net/aijiuziji/article/details/48074193](http://blog.csdn.net/aijiuziji/article/details/48074193)
-          Var3d: [http://var3d.net/](http://var3d.net/)    
+          QQ: 348705644
+	  Email: var3d@qq.com
+          Var3d: [http://var3d.net/](http://var3d.net/)    
         
 ## License
 
