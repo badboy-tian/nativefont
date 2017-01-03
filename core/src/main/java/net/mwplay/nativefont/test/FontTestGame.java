@@ -19,10 +19,11 @@ public class FontTestGame extends Game {
     public Map<String, NativeFont> fonts = new HashMap<String, NativeFont>();
     public static final String DEFAULT_CHARS =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*";
+    public Handler handle;
 
-    public FontTestGame() {
+    public FontTestGame(Handler handler) {
+        handle = handler;
     }
-
 
     public int getDefaultFontSize() {
         return this.fontSize;
