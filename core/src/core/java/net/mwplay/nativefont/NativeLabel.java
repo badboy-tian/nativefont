@@ -1,5 +1,6 @@
 package net.mwplay.nativefont;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -52,8 +53,13 @@ public class NativeLabel extends Label {
     }
 
     @Override
-    public void setText(CharSequence newText) {
-        super.setText(append(newText, getStyle()));
+    public void setText(final CharSequence newText) {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                NativeLabel.super.setText(append(newText, getStyle()));
+            }
+        });
     }
 
     public NativeLabel text(String text){
