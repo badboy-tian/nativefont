@@ -54,6 +54,10 @@ public class NativeLabel extends Label {
 
     @Override
     public void setText(final CharSequence newText) {
+                super.setText(append(newText, getStyle()));
+    }
+
+    public void postText(final CharSequence newText){
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
