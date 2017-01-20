@@ -41,7 +41,7 @@ allprojects {
 
 ```
 dependencies {
-	        compile 'com.github.tianqiujie.nativefont:2.3.4'
+	        compile 'com.github.tianqiujie.nativefont:2.4.3'
 	}
 ```
 In Moe
