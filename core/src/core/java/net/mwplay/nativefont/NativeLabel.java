@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Field;
 
 /**
  * Created by tian on 2016/10/2.
@@ -54,11 +56,28 @@ public class NativeLabel extends Label {
     }
 
 
-    GlyphLayout layout = new GlyphLayout();
+    public GlyphLayout layout = new GlyphLayout();
     @Override
     public void setText(final CharSequence newText) {
                 super.setText(append(newText, getStyle()));
 
+        boolean wrap = false;
+        try{
+            Field field = ClassReflection.getDeclaredField(getClass().getSuperclass(), "wrap");
+            field.setAccessible(true);
+            wrap = (boolean) field.get(this);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        layout.setText(getStyle().font, getText());
+        if (!wrap){
+            resetWidthAndHeight();
+        }
+    }
+
+    public void resetWidthAndHeight(){
         layout.setText(getStyle().font, getText());
         setSize(layout.width, layout.height);
     }
