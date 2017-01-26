@@ -69,7 +69,11 @@ public class FontTest extends ScreenAdapter {
         addLabelTTF("привет", base1.cpy().sub(0, 160), Color.RED);
         addLabelTTF("你好", base1.cpy().sub(0, 220), Color.RED);
         addLabelTTF("Përshëndetje", base1.cpy().sub(0, 280), Color.RED);
-        addLabelTTF("¡Hola", base1.cpy().sub(0, 340), Color.RED);
+        NativeLabel label = addLabel("你好", base1.cpy().sub(0, 340), Color.RED);
+        label.debug();
+
+        label.setText("你好哈哈哈哈哈");
+
 
         TextField.TextFieldStyle style = new TextField.TextFieldStyle();
         style.font = game.fonts.get("font");
@@ -103,20 +107,23 @@ public class FontTest extends ScreenAdapter {
         stage.addActor(label);
     }
 
-    private void addLabel(String text, Vector2 pos, Color strokeColor) {
+    private NativeLabel addLabel(String text, Vector2 pos, Color strokeColor) {
         label = new NativeLabel("", game.fonts.get("font"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         label.setStroke(strokeColor, 1);
         stage.addActor(label);
+        return label;
     }
 
-    private void addLabel50(String text, Vector2 pos, Color strokeColor) {
+    private NativeLabel addLabel50(String text, Vector2 pos, Color strokeColor) {
         label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
         label.setStroke(strokeColor, 1);
         stage.addActor(label);
+
+        return label;
     }
 
     private void addLabelTTF(String text,Vector2 pos,Color strokeColor){

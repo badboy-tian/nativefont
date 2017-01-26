@@ -3,6 +3,7 @@ package net.mwplay.nativefont;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -52,9 +53,14 @@ public class NativeLabel extends Label {
         return text;
     }
 
+
+    GlyphLayout layout = new GlyphLayout();
     @Override
     public void setText(final CharSequence newText) {
                 super.setText(append(newText, getStyle()));
+
+        layout.setText(getStyle().font, getText());
+        setSize(layout.width, layout.height);
     }
 
     public void postText(final CharSequence newText){
