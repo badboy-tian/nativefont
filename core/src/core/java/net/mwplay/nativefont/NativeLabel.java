@@ -86,7 +86,7 @@ public class NativeLabel extends Label {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                setText(append(newText, getStyle()));
+                setText(newText);
             }
         });
     }
