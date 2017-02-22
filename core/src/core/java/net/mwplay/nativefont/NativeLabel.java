@@ -63,9 +63,9 @@ public class NativeLabel extends Label {
 
         boolean wrap = false;
         try{
-            Field field = ClassReflection.getDeclaredField(getClass().getSuperclass(), "wrap");
+            Field field = ClassReflection.getDeclaredField(NativeLabel.this.getClass().getSuperclass(), "wrap");
             field.setAccessible(true);
-            wrap = (boolean) field.get(this);
+            wrap = (boolean) field.get(NativeLabel.this);
 
         }catch (Exception e){
             e.printStackTrace();
