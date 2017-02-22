@@ -17,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Field;
 
 /**
  * Created by tian on 2016/10/2.
@@ -61,7 +59,7 @@ public class NativeLabel extends Label {
     public void setText(final CharSequence newText) {
                 super.setText(append(newText, getStyle()));
 
-        boolean wrap = false;
+        /*boolean wrap = false;
         try{
             Field field = ClassReflection.getDeclaredField(NativeLabel.this.getClass().getSuperclass(), "wrap");
             field.setAccessible(true);
@@ -74,7 +72,8 @@ public class NativeLabel extends Label {
         layout.setText(getStyle().font, getText());
         if (!wrap){
             resetWidthAndHeight();
-        }
+        }*/
+        setSize(getPrefWidth(),  getPrefHeight());
     }
 
     public void resetWidthAndHeight(){
