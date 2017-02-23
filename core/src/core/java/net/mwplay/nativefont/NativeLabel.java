@@ -74,7 +74,7 @@ public class NativeLabel extends Label {
             wrap = (boolean) field.get(NativeLabel.this);
 
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         if (!wrap){
