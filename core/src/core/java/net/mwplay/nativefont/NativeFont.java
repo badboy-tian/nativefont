@@ -181,10 +181,10 @@ public class NativeFont extends BitmapFont {
     private void create(String characters, boolean haveMinPageSize) {
         char c;
         characters = characters.replaceAll("[\\t\\n\\x0B\\f\\r]", "");
-        Array<String> cs = new Array();
+        Array<String> cs = new Array<>();
         for (char c2 : characters.toCharArray()) {
-            if (this.charSet.add((String.valueOf(c2)).toString())) {
-                cs.add((String.valueOf(c2)).toString());
+            if (this.charSet.add((String.valueOf(c2)))) {
+                cs.add((String.valueOf(c2)));
             }
         }
         if (haveMinPageSize) {
@@ -196,12 +196,12 @@ public class NativeFont extends BitmapFont {
 
         char c2;
         for (int i = 0; i < cs.size; i++) {
-            String txt = (String) cs.get(i);
+            String txt = cs.get(i);
             c2 = txt.charAt(0);
             String css = String.valueOf(c2);
             if (this.emojiSet.get(css) != null) {
                 this.charSet.remove(css);
-                EmojiDate date = (EmojiDate) this.emojiSet.get(css);
+                EmojiDate date = this.emojiSet.get(css);
                 appendEmoji(c2 + "", date.path, date.size);
             } else {
                 putGlyph(c2, this.listener.getFontPixmap(txt, this.paint));
@@ -233,7 +233,6 @@ public class NativeFont extends BitmapFont {
     }
 
     private void upData() {
-
         Glyph spaceGlyph = this.data.getGlyph(' ');
         if (spaceGlyph == null) {
             spaceGlyph = new Glyph();
@@ -245,13 +244,13 @@ public class NativeFont extends BitmapFont {
             spaceGlyph.id = 32;
             this.data.setGlyph(32, spaceGlyph);
         }
-        this.data.spaceWidth = (float) (spaceGlyph != null ? spaceGlyph.xadvance + spaceGlyph.width : 1);
+        this.data.spaceWidth = (float) (spaceGlyph.xadvance + spaceGlyph.width);
 
         Array<Page> pages = this.packer.getPages();
         Array<TextureRegion> regions = getRegions();
         int regSize = regions.size - 1;
         for (int i = 0; i < pages.size; i++) {
-            Page p = (Page) pages.get(i);
+            Page p =  pages.get(i);
             if (i > regSize) {
                 p.updateTexture(this.minFilter, this.magFilter, false);
                 regions.add(new TextureRegion(p.getTexture()));
@@ -265,15 +264,13 @@ public class NativeFont extends BitmapFont {
         for (Glyph[] page : this.data.glyphs) {
             if (page == null) continue;
 
-            if (page != null) {
-                for (Glyph glyph : page) {
-                    if (glyph != null) {
-                        TextureRegion region = (TextureRegion) getRegions().get(glyph.page);
-                        if (region == null) {
-                            throw new IllegalArgumentException("BitmapFont texture region array cannot contain null elements.");
-                        }
-                        this.data.setGlyphRegion(glyph, region);
+            for (Glyph glyph : page) {
+                if (glyph != null) {
+                    TextureRegion region = (TextureRegion) getRegions().get(glyph.page);
+                    if (region == null) {
+                        throw new IllegalArgumentException("BitmapFont texture region array cannot contain null elements.");
                     }
+                    this.data.setGlyphRegion(glyph, region);
                 }
             }
         }

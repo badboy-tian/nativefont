@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Field;
 
 /**
  * Created by tian on 2016/10/2.
@@ -30,6 +32,8 @@ public class NativeLabel extends Label {
     private Color strokeColor;
     private float strokeWidth;
 
+    public float postWidth = 0;
+    public float postHeight = 0;
 
     public NativeLabel(CharSequence text, NativeFont font) {
         this(text, font, Color.WHITE);
@@ -58,8 +62,12 @@ public class NativeLabel extends Label {
     @Override
     public void setText(final CharSequence newText) {
                 super.setText(append(newText, getStyle()));
+    }
 
-        /*boolean wrap = false;
+    public void resetWidthAndHeight(){
+        layout.setText(getStyle().font, getText());
+
+        boolean wrap = false;
         try{
             Field field = ClassReflection.getDeclaredField(NativeLabel.this.getClass().getSuperclass(), "wrap");
             field.setAccessible(true);
@@ -69,19 +77,44 @@ public class NativeLabel extends Label {
             e.printStackTrace();
         }
 
-        layout.setText(getStyle().font, getText());
         if (!wrap){
-            resetWidthAndHeight();
-        }*/
-        setSize(getPrefWidth(),  getPrefHeight());
+            setSize(layout.width, layout.height);
+        }
+
+        postWidth = layout.width;
+        postHeight = layout.height;
+
+        if (onCompletedListener != null){
+            onCompletedListener.onCompleted(postWidth, postHeight);
+        }
     }
 
-    public void resetWidthAndHeight(){
-        layout.setText(getStyle().font, getText());
-        setSize(layout.width, layout.height);
+    onCompletedListener onCompletedListener;
+    public interface onCompletedListener{
+        public void onCompleted(float width, float height);
+    }
+    public void postText(final CharSequence newText, onCompletedListener onCompletedListener){
+        this.onCompletedListener= onCompletedListener;
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                setText(newText);
+                resetWidthAndHeight();
+            }
+        });
     }
 
     public void postText(final CharSequence newText){
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                setText(newText);
+                resetWidthAndHeight();
+            }
+        });
+    }
+
+    public void postTextNoChangeSize(final CharSequence newText){
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
