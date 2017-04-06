@@ -35,8 +35,24 @@ public class FontTest extends ScreenAdapter {
         super.show();
         Image image = new Image(new Texture("1.png"));
 
-        Vector2 base = new Vector2(100, 800);
-        addLabel("Hello", base.cpy());
+        final Vector2 base = new Vector2(100, 800);
+
+
+        final NativeLabel ll = addLabel("Hell\no", base.cpy());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ll.postText("xxooxx", new NativeLabel.onCompletedListener() {
+                    @Override
+                    public void onCompleted(float width, float height) {
+                        System.out.println(width + " " + height);
+                    }
+                });
+            }
+        }).start();
+
+
         addLabel("안녕하세요", base.cpy().sub(0, 40));
         addLabel("こんにちは", base.cpy().sub(0, 80));
         addLabel("привет", base.cpy().sub(0, 120));
@@ -100,18 +116,21 @@ public class FontTest extends ScreenAdapter {
         });
     }
 
-    private void addLabel(String text, Vector2 pos) {
+    private NativeLabel addLabel(String text, Vector2 pos) {
         label = new NativeLabel("", game.fonts.get("font"), Color.BLACK);
-        label.setText(text);
+        label.postText(text);
         label.setPosition(pos.x, pos.y);
         stage.addActor(label);
+        label.debug();
+
+        return label;
     }
 
     private NativeLabel addLabel(String text, Vector2 pos, Color strokeColor) {
         label = new NativeLabel("", game.fonts.get("font"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
-        label.setStroke(strokeColor, 1);
+        label.setStroke(strokeColor);
         stage.addActor(label);
         return label;
     }
@@ -120,7 +139,7 @@ public class FontTest extends ScreenAdapter {
         label = new NativeLabel("", game.fonts.get("font50"), Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
-        label.setStroke(strokeColor, 1);
+        label.setStroke(strokeColor);
         stage.addActor(label);
 
         return label;
@@ -130,7 +149,7 @@ public class FontTest extends ScreenAdapter {
         label = new NativeLabel("",game.fonts.get("ttffont"),Color.BLACK);
         label.setText(text);
         label.setPosition(pos.x, pos.y);
-        label.setStroke(strokeColor, 1);
+        label.setStroke(strokeColor);
         stage.addActor(label);
     }
 
