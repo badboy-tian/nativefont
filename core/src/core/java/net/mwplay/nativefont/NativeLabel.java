@@ -25,12 +25,7 @@ import com.badlogic.gdx.utils.reflect.Field;
  */
 
 public class NativeLabel extends Label {
-
-    private float[] dxs = new float[]{1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f};
-    private float[] dys = new float[]{1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f};
-    private boolean isStroke = false;
     private Color strokeColor;
-    private float strokeWidth;
 
     public float postWidth = 0;
     public float postHeight = 0;
@@ -59,42 +54,45 @@ public class NativeLabel extends Label {
 
 
     public GlyphLayout layout = new GlyphLayout();
+
     @Override
     public void setText(final CharSequence newText) {
-                super.setText(append(newText, getStyle()));
+        super.setText(append(newText, getStyle()));
     }
 
-    public void resetWidthAndHeight(){
+    public void resetWidthAndHeight() {
         layout.setText(getStyle().font, getText());
 
         boolean wrap = false;
-        try{
+        try {
             Field field = ClassReflection.getDeclaredField(NativeLabel.this.getClass().getSuperclass(), "wrap");
             field.setAccessible(true);
             wrap = (boolean) field.get(NativeLabel.this);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             //e.printStackTrace();
         }
 
-        if (!wrap){
+        if (!wrap) {
             setSize(layout.width, layout.height);
         }
 
         postWidth = layout.width;
         postHeight = layout.height;
 
-        if (onCompletedListener != null){
+        if (onCompletedListener != null) {
             onCompletedListener.onCompleted(postWidth, postHeight);
         }
     }
 
     onCompletedListener onCompletedListener;
-    public interface onCompletedListener{
+
+    public interface onCompletedListener {
         public void onCompleted(float width, float height);
     }
-    public void postText(final CharSequence newText, onCompletedListener onCompletedListener){
-        this.onCompletedListener= onCompletedListener;
+
+    public void postText(final CharSequence newText, onCompletedListener onCompletedListener) {
+        this.onCompletedListener = onCompletedListener;
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +102,7 @@ public class NativeLabel extends Label {
         });
     }
 
-    public void postText(final CharSequence newText){
+    public void postText(final CharSequence newText) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -114,7 +112,7 @@ public class NativeLabel extends Label {
         });
     }
 
-    public void postTextNoChangeSize(final CharSequence newText){
+    public void postTextNoChangeSize(final CharSequence newText) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -123,17 +121,17 @@ public class NativeLabel extends Label {
         });
     }
 
-    public NativeLabel text(String text){
+    public NativeLabel text(String text) {
         setText(text);
         return this;
     }
 
-    public NativeLabel color(String hex){
+    public NativeLabel color(String hex) {
         setColor(Color.valueOf(hex));
         return this;
     }
 
-    public NativeLabel color(Color color){
+    public NativeLabel color(Color color) {
         setColor(color);
 
         return this;
@@ -146,13 +144,11 @@ public class NativeLabel extends Label {
     }
 
     public void setBold(float width) {
-        setStroke(getColor().cpy(), width);
+        setStroke(getColor().cpy());
     }
 
-    public void setStroke(Color strokeColor, float strokeWidth) {
+    public void setStroke(Color strokeColor) {
         this.strokeColor = strokeColor;
-        this.strokeWidth = strokeWidth;
-        this.isStroke = true;
     }
 
     public TextureRegion getRegion() {
@@ -167,20 +163,13 @@ public class NativeLabel extends Label {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         box.set(getX(), getY(), getWidth(), getHeight());
-
-        if (this.isStroke) {
-            validate();
-            for (int i = 0; i < this.dxs.length; i++) {
+        if (strokeColor != null) {
+            for (int i = 0; i < 8; i++) {
                 getBitmapFontCache().tint(this.strokeColor);
-                getBitmapFontCache().setPosition(getX() + (this.dxs[i] * this.strokeWidth), (getY() + (this.dys[i] * this.strokeWidth)) + this.strokeWidth);
+                getBitmapFontCache().setPosition((float) (getX() + Math.sin(i) * 0.75f), (float) (getY() + Math.cos(i) * 0.75f));
                 getBitmapFontCache().draw(batch, getColor().a);
             }
-            getBitmapFontCache().tint(getColor());
-            getBitmapFontCache().setPosition(getX(), getY() + this.strokeWidth);
-            getBitmapFontCache().draw(batch);
-            return;
         }
-
         super.draw(batch, parentAlpha);
     }
 
@@ -191,30 +180,30 @@ public class NativeLabel extends Label {
         return this;
     }
 
-    public NativeLabel width(float width){
+    public NativeLabel width(float width) {
         setWidth(width);
         return this;
     }
 
-    public NativeLabel height(float height){
+    public NativeLabel height(float height) {
         setHeight(height);
         return this;
     }
 
-    public float width(){
+    public float width() {
         return getWidth();
     }
 
-    public float height(){
+    public float height() {
         return getHeight();
     }
 
-    public NativeLabel disableTouch(){
+    public NativeLabel disableTouch() {
         setTouchable(Touchable.disabled);
         return this;
     }
 
-    public NativeLabel enableTouch(){
+    public NativeLabel enableTouch() {
         setTouchable(Touchable.enabled);
         return this;
     }
@@ -315,9 +304,10 @@ public class NativeLabel extends Label {
 
     /**
      * 代表可以拖动,方便调试
+     *
      * @return
      */
-    public NativeLabel drag(){
+    public NativeLabel drag() {
         MyWidget.setTouchTrack(this);
         return this;
     }
@@ -440,7 +430,7 @@ public class NativeLabel extends Label {
         return this;
     }
 
-    public NativeLabel isColorButton(final TClickListener clickListener){
+    public NativeLabel isColorButton(final TClickListener clickListener) {
         addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -452,12 +442,11 @@ public class NativeLabel extends Label {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 event.getTarget().setColor(Color.WHITE);
-                if (clickListener != null){
+                if (clickListener != null) {
                     clickListener.onClicked(NativeLabel.this);
                 }
             }
         });
-
 
 
         return this;
@@ -587,6 +576,7 @@ public class NativeLabel extends Label {
 
     /**
      * 水平中线对齐
+     *
      * @param actor
      */
     public NativeLabel alignCenter(Actor actor) {
