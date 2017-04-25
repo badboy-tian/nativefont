@@ -140,7 +140,7 @@ public class NativeLabel extends Label {
     @Override
     public void setColor(Color color) {
         super.setColor(color);
-        this.strokeColor = color.cpy();
+        //this.strokeColor = color.cpy();
     }
 
     public void setBold(float width) {
