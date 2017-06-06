@@ -598,9 +598,9 @@ public class NativeLabel extends Label {
 
     public Rectangle box = new Rectangle();
 
-    protected void init() 
+    protected void init() {
         setSize(getPrefWidth(), getPrefHeight());
-        setColor(style.fontColor);
+        setColor(getStyle().fontColor);
         box.setSize(getWidth(), getHeight());
     }
 }
