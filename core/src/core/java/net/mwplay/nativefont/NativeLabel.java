@@ -42,8 +42,6 @@ public class NativeLabel extends Label {
 
     public NativeLabel(CharSequence text, LabelStyle style) {
         super(append(text, style), style);
-        setSize(getPrefWidth(), getPrefHeight());
-        setColor(style.fontColor);
         init();
     }
 
@@ -600,7 +598,9 @@ public class NativeLabel extends Label {
 
     public Rectangle box = new Rectangle();
 
-    protected void init() {
+    protected void init() 
+        setSize(getPrefWidth(), getPrefHeight());
+        setColor(style.fontColor);
         box.setSize(getWidth(), getHeight());
     }
 }
