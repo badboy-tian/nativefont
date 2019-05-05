@@ -143,8 +143,9 @@ public class NativeFont extends BitmapFont {
 
     public NativeFont appendEmoji(String txt, String imgname, int size) {
         Pixmap pixmap = new Pixmap(Gdx.files.internal(imgname));
-        Pixmap.setFilter(Pixmap.Filter.BiLinear);
+       // Pixmap.setFilter(Pixmap.Filter.BiLinear);
         Pixmap pixmap2 = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        pixmap2.setFilter(Pixmap.Filter.BiLinear);
         pixmap2.drawPixmap(pixmap, 0, 0, pixmap.getWidth(), pixmap.getHeight(), 0, 0, size, size);
         pixmap.dispose();
         appendEmoji(txt, pixmap2);
@@ -244,7 +245,7 @@ public class NativeFont extends BitmapFont {
             spaceGlyph.id = 32;
             this.data.setGlyph(32, spaceGlyph);
         }
-        this.data.spaceWidth = (float) (spaceGlyph.xadvance + spaceGlyph.width);
+        this.data.spaceXadvance = (float) (spaceGlyph.xadvance + spaceGlyph.width);
 
         Array<Page> pages = this.packer.getPages();
         Array<TextureRegion> regions = getRegions();
